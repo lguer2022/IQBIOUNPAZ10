@@ -1,0 +1,392 @@
+{
+  "event": "JORNADA DE LOS 10 AÑOS de IQ/BIO",
+  "categories": [
+    {
+      "title": "Esterilización (IQ)",
+      "questions": [
+        {
+          "value": 200,
+          "prompt": "¿Temperatura y tiempo estándar para autoclave de vapor saturado a 1 atm adicional?",
+          "answer": "121°C por 15–20 minutos",
+          "options": [
+            "121°C por 15–20 minutos",
+            "134°C por 5–10 minutos", 
+            "100°C por 30 minutos",
+            "160°C por 2 horas"
+          ],
+          "correctIndex": 0,
+          "hint": "Ciclo de Gravedad",
+          "image": ""
+        },
+        {
+          "value": 400,
+          "prompt": "Nombre del indicador biológico clásico para validar esterilización a vapor.",
+          "answer": "Geobacillus stearothermophilus",
+          "options": [
+            "Bacillus subtilis",
+            "Geobacillus stearothermophilus",
+            "Clostridium sporogenes",
+            "Bacillus cereus"
+          ],
+          "correctIndex": 1,
+          "hint": "Termófilo",
+          "image": ""
+        },
+        {
+          "value": 600,
+          "prompt": "¿Qué empaques son más adecuados para esterilización por vapor?",
+          "answer": "Campos de tela no tejida o papel grado médico",
+          "options": [
+            "Bolsas de plástico convencional",
+            "Campos de tela no tejida o papel grado médico",
+            "Papel periódico",
+            "Láminas de aluminio"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 800,
+          "prompt": "Defina 'esterilidad asegurada' (SAL) 10⁻⁶.",
+          "answer": "Probabilidad de 1 en 1.000.000 de que un microorganismo sobreviva",
+          "options": [
+            "Probabilidad de 1 en 1.000 de que un microorganismo sobreviva",
+            "Probabilidad de 1 en 10.000 de que un microorganismo sobreviva",
+            "Probabilidad de 1 en 100.000 de que un microorganismo sobreviva",
+            "Probabilidad de 1 en 1.000.000 de que un microorganismo sobreviva"
+          ],
+          "correctIndex": 3,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 1000,
+          "prompt": "Ensayo que verifica penetración de vapor en paquetes porosos.",
+          "answer": "Prueba Bowie-Dick",
+          "options": [
+            "Test de Helix",
+            "Prueba Bowie-Dick",
+            "Test de Dart",
+            "Ensayo de Geobacillus"
+          ],
+          "correctIndex": 1,
+          "hint": "Paquetes porosos",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "title": "Bioseguridad y PPE (IQ/BIO)",
+      "questions": [
+        {
+          "value": 200,
+          "prompt": "Secuencia correcta para retirarse guantes y camisolín.",
+          "answer": "Guantes → higiene de manos → camisolín",
+          "options": [
+            "Camisolín → guantes → higiene de manos",
+            "Guantes → higiene de manos → camisolín",
+            "Higiene de manos → guantes → camisolín",
+            "Guantes → camisolín → higiene de manos"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 400,
+          "prompt": "¿Qué respirador recomiendan para aerosoles biológicos?",
+          "answer": "N95 o superior",
+          "options": [
+            "Mascarilla quirúrgica simple",
+            "N95 o superior",
+            "Mascarilla de tela",
+            "Protector facial únicamente"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 600,
+          "prompt": "Clase de cabina para manipulación de agentes moderados con protección al producto y al operador.",
+          "answer": "Cabina de Bioseguridad Clase II",
+          "options": [
+            "Cabina de Bioseguridad Clase I",
+            "Cabina de Bioseguridad Clase II",
+            "Cabina de Bioseguridad Clase III",
+            "Campana de extracción química"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 800,
+          "prompt": "Color de contenedor para residuos punzocortantes en Argentina.",
+          "answer": "Rojo rígido, rotulado como patogénico",
+          "options": [
+            "Amarillo rígido",
+            "Verde rígido",
+            "Rojo rígido, rotulado como patogénico",
+            "Negro rígido"
+          ],
+          "correctIndex": 2,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 1000,
+          "prompt": "Diferencia entre desinfección de alto nivel y esterilización.",
+          "answer": "La primera no elimina todas las esporas; la segunda sí",
+          "options": [
+            "No hay diferencia, son sinónimos",
+            "La primera usa calor húmedo, la segunda calor seco",
+            "La primera no elimina todas las esporas; la segunda sí",
+            "La primera es más efectiva que la segunda"
+          ],
+          "correctIndex": 2,
+          "hint": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "title": "Radiología Convencional (BIO)",
+      "questions": [
+        {
+          "value": 200,
+          "prompt": "Unidad SI de dosis absorbida.",
+          "answer": "Gray (Gy)",
+          "options": [
+            "Sievert (Sv)",
+            "Gray (Gy)",
+            "Becquerel (Bq)",
+            "Curie (Ci)"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 400,
+          "prompt": "Efecto fotoeléctrico: mayor probabilidad en…",
+          "answer": "Materiales de alto Z y energías bajas",
+          "options": [
+            "Materiales de bajo Z y energías altas",
+            "Materiales de alto Z y energías bajas",
+            "Materiales de bajo Z y energías bajas",
+            "Materiales de alto Z y energías altas"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 600,
+          "prompt": "Relación mAs–densidad óptica en radiografía.",
+          "answer": "Proporcional (aumenta mAs, aumenta DO)",
+          "options": [
+            "Inversamente proporcional",
+            "Proporcional (aumenta mAs, aumenta DO)",
+            "No hay relación",
+            "Exponencial"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 800,
+          "prompt": "Función del bucky en radiología convencional.",
+          "answer": "Alojar rejilla antidifusora y portachasis",
+          "options": [
+            "Generar rayos X",
+            "Alojar rejilla antidifusora y portachasis",
+            "Controlar la exposición",
+            "Procesar las imágenes"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 1000,
+          "prompt": "Nombre del ruido por señal baja en imagen digital.",
+          "answer": "Ruido cuántico (quantum mottle)",
+          "options": [
+            "Ruido electrónico",
+            "Ruido cuántico (quantum mottle)",
+            "Ruido estructural",
+            "Ruido de movimiento"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "title": "Protección Radiológica (BIO)",
+      "questions": [
+        {
+          "value": 200,
+          "prompt": "Principio ALARA significa…",
+          "answer": "Tan baja como razonablemente alcanzable",
+          "options": [
+            "Siempre límite alto de radiación aceptable",
+            "Tan baja como razonablemente alcanzable",
+            "Aplicación limitada de radiación apropiada",
+            "Análisis de límites para radiación activa"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 400,
+          "prompt": "Blindaje típico en paredes de salas de RX.",
+          "answer": "Plomo o equivalente en mm según cálculo",
+          "options": [
+            "Hormigón simple",
+            "Plomo o equivalente en mm según cálculo",
+            "Madera laminada",
+            "Vidrio templado"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 600,
+          "prompt": "Dosímetro personal más común para RX diagnóstica.",
+          "answer": "TLD u OSL (p.ej., Al2O3)",
+          "options": [
+            "Cámara de ionización",
+            "TLD u OSL (p.ej., Al2O3)",
+            "Contador Geiger",
+            "Película radiográfica solamente"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 800,
+          "prompt": "Efectos estocásticos vs determinísticos: diferencia clave.",
+          "answer": "Estocásticos no tienen umbral; determinísticos sí",
+          "options": [
+            "Estocásticos tienen umbral; determinísticos no",
+            "Estocásticos no tienen umbral; determinísticos sí",
+            "Ambos tienen el mismo umbral",
+            "No hay diferencia entre ellos"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 1000,
+          "prompt": "Leyes físicas para reducir dosis por distancia.",
+          "answer": "Ley del inverso del cuadrado",
+          "options": [
+            "Ley de atenuación exponencial",
+            "Ley del inverso del cuadrado",
+            "Ley de conservación de energía",
+            "Ley de Bragg"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "title": "Anatomía y Procedimientos (IQ/BIO)",
+      "questions": [
+        {
+          "value": 200,
+          "prompt": "Plano que divide el cuerpo en derecha/izquierda.",
+          "answer": "Plano sagital",
+          "options": [
+            "Plano coronal",
+            "Plano sagital",
+            "Plano transversal",
+            "Plano oblicuo"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 400,
+          "prompt": "Instrumento para hemostasia de vasos pequeños.",
+          "answer": "Mosquito (Halsted)",
+          "options": [
+            "Kelly",
+            "Mosquito (Halsted)",
+            "Rochester",
+            "Adson"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 600,
+          "prompt": "Proyección para tórax PA: distancia foco-película típica.",
+          "answer": "180 cm (72 pulgadas)",
+          "options": [
+            "100 cm (40 pulgadas)",
+            "180 cm (72 pulgadas)",
+            "150 cm (60 pulgadas)",
+            "200 cm (80 pulgadas)"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 800,
+          "prompt": "Pinza para sujetar campo operatorio en piel.",
+          "answer": "Pinza Backhaus",
+          "options": [
+            "Pinza Allis",
+            "Pinza Backhaus",
+            "Pinza Kocher",
+            "Pinza Babcock"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        },
+        {
+          "value": 1000,
+          "prompt": "Corte anatómico que divide en anterior/posterior.",
+          "answer": "Plano coronal (frontal)",
+          "options": [
+            "Plano sagital",
+            "Plano coronal (frontal)",
+            "Plano transversal",
+            "Plano paramediano"
+          ],
+          "correctIndex": 1,
+          "hint": "",
+          "image": ""
+        }
+      ]
+    }
+  ],
+  "finalJeopardy": {
+    "prompt": "Concepto que resume el principio rector de protección radiológica en diagnóstico.",
+    "answer": "ALARA",
+    "options": [
+      "ALARA",
+      "RADAR",
+      "MELAS",
+      "DOSIM"
+    ],
+    "correctIndex": 0,
+    "hint": "Principio fundamental para minimizar exposición"
+  }
+}

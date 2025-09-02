@@ -13,6 +13,65 @@
 <!--    <link rel="stylesheet" href="/assets/responsive-overrides.css"> -->
     <link rel="stylesheet" href="/assets/responsive-overrides.css">
   </head>
+  <script>
+  (function () {
+    // Clave “blanda”
+    var SETTINGS_PASSWORD = "1718*";
+    // Guardamos si ya se autenticó para no pedir cada vez
+    var TOKEN_KEY = "settings_unlocked";
+
+    // Heurística para detectar el botón/ícono de Configuración (engranaje)
+    var SELECTORS = [
+      'button[aria-label*="config"]',
+      'button[aria-label*="ajuste"]',
+      '[title*="config"]',
+      '[title*="ajuste"]',
+      '.settings',
+      '.config',
+      '.gear',
+      '[data-role="settings"]'
+    ];
+
+    function isSettingsTrigger(node) {
+      var el = node;
+      var steps = 0;
+      while (el && steps < 5) { // miramos algunos ancestros por si el click va al <svg>
+        for (var i = 0; i < SELECTORS.length; i++) {
+          try {
+            if (el.matches && el.matches(SELECTORS[i])) return true;
+          } catch (e) {}
+        }
+        el = el.parentElement;
+        steps++;
+      }
+      return false;
+    }
+
+    function ensureAuth(evt) {
+      // si ya se autenticó, dejamos pasar
+      if (sessionStorage.getItem(TOKEN_KEY) === "1") return true;
+
+      var ok = prompt("Ingrese la contraseña para acceder a la configuración") === SETTINGS_PASSWORD;
+      if (ok) {
+        sessionStorage.setItem(TOKEN_KEY, "1");
+        return true;
+      } else {
+        alert("Contraseña incorrecta");
+        // frenamos el evento ANTES de que llegue a React
+        evt.preventDefault();
+        evt.stopImmediatePropagation();
+        return false;
+      }
+    }
+
+    // Interceptamos el click EN CAPTURA para ganarle al manejador de React
+    document.addEventListener("click", function (evt) {
+      if (isSettingsTrigger(evt.target)) {
+        ensureAuth(evt);
+      }
+    }, true);
+  })();
+</script>
   <body>
     <div id="root"></div>
   </body>

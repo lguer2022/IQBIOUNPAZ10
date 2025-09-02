@@ -1,0 +1,72 @@
+/* ======= Responsive overrides (5 columnas SIEMPRE) ======= */
+
+/* Evita scroll horizontal accidental */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Medios fluidos */
+img, svg, canvas, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* === 5 columnas fijas, sin colapso === */
+.grid-cols-5,
+[class*="grid-cols-5"] {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
+/* Encabezados en celdas: una sola línea con puntos suspensivos */
+.col-header, th, .header, .heading, .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Ajustes para pantallas chicas --- */
+@media (max-width: 640px) {
+  /* Base tipográfica más compacta */
+  html { font-size: 13px; }              /* ~-18% */
+  body { line-height: 1.35; }
+
+  /* Títulos grandes -> más chicos pero legibles */
+  .text-6xl, .text-5xl, .text-4xl {
+    font-size: clamp(1rem, 3.8vw + 0.35rem, 1.25rem);
+    line-height: 1.15;
+  }
+  .text-3xl, .text-2xl, .text-xl {
+    font-size: clamp(0.95rem, 3.2vw + 0.25rem, 1.1rem);
+    line-height: 1.2;
+  }
+
+  /* Compactar paddings/gaps frecuentes */
+  .p-8 { padding: 0.9rem !important; }
+  .p-6 { padding: 0.75rem !important; }
+  .p-4 { padding: 0.5rem !important; }
+  .px-8 { padding-left: 0.9rem !important; padding-right: 0.9rem !important; }
+  .py-8 { padding-top: 0.9rem !important; padding-bottom: 0.9rem !important; }
+
+  .gap-8 { gap: 0.8rem !important; }
+  .gap-6 { gap: 0.65rem !important; }
+  .gap-4 { gap: 0.5rem !important; }
+
+  /* Celdas/“cards” más bajas */
+  .h-20 { height: 4.25rem !important; }
+  .h-16 { height: 3.5rem !important; }
+  .h-12 { height: 2.75rem !important; }
+
+  /* Tablas o encabezados: celdas más compactas */
+  th, td { padding: 0.4rem 0.5rem; }
+
+  /* Contenedores con anchos fijos -> que respeten el viewport */
+  .max-w-7xl, .max-w-5xl, .max-w-4xl, .w-96, .w-80, .w-72, .w-64 {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* Mejoras de interacción táctil */
+* { -webkit-tap-highlight-color: transparent; }
+button, [role="button"] { touch-action: manipulation; }

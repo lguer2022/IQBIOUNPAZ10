@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Creador de JSON — Jeopardy</title>
+<style>
+  :root { --mx: 960px; }
+  body { font-family: system-ui, -apple-system, "Inter", Segoe UI, Roboto, Arial, sans-serif; margin: 0; background:#f7f7f8; color:#111; }
+  header { padding: 16px; background: #0b5ff0; color: #fff; }
+  main { max-width: var(--mx); margin: 16px auto; padding: 16px; background: #fff; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.06); }
+  h1 { font-size: 22px; margin: 0; }
+  h2 { font-size: 18px; margin-top: 24px; }
+  fieldset { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; margin-top: 12px; }
+  legend { padding: 0 6px; font-weight: 700; }
+  label { font-weight: 600; font-size: 14px; display: block; margin: 10px 0 6px; }
+  input[type="text"], input[type="number"], textarea, select {
+    width: 100%; box-sizing: border-box; padding: 10px 12px; border:1px solid #d1d5db; border-radius: 8px; background: #fff;
+  }
+  .row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+  .col-6 { grid-column: span 6; } .col-4 { grid-column: span 4; } .col-3 { grid-column: span 3; } .col-12 { grid-column: 1 / -1; }
+  .muted { color: #6b7280; font-size: 12px; }
+  .btn { display:inline-flex; align-items:center; gap:.5rem; padding:10px 14px; border-radius: 10px; border:1px solid #d1d5db; background:#0b5ff0; color:#fff; font-weight:700; cursor:pointer; }
+  .btn.secondary { background:#fff; color:#0b5ff0; }
+  .pill { font-size: 12px; background:#eef2ff; color:#3730a3; padding:3px 8px; border-radius:999px; border:1px solid #c7d2fe; }
+  .grid-qs { display:grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+  .card { border:1px solid #e5e7eb; border-radius: 10px; padding: 10px; background:#fafafa; }
+  .qhead { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+  .options { display:grid; grid-template-columns: repeat(12, 1fr); gap:8px; }
+  .opt { grid-column: span 6; display:flex; align-items:center; gap:6px; }
+  footer { max-width: var(--mx); margin: 12px auto 40px; padding: 0 16px; display:flex; justify-content: space-between; align-items:center; }
+  @media (max-width:768px){
+    .col-6, .col-4, .col-3 { grid-column: 1 / -1; }
+    .opt { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Creador de JSON <span class="pill">Jeopardy</span></h1>
+  </header>
+
+  <main>
+    <section>
+      <div class="row">
+        <div class="col-6">
+          <label>Nombre del archivo (sin extensión)</label>
+          <input id="fileName" type="text" placeholder="ej.: preguntas-iq-bio" />
+          <div class="muted">Se descargará como <strong>nombre</strong><code>.json</code></div>
+        </div>
+        <div class="col-6">
+          <label>Nombre del evento</label>
+          <input id="eventName" type="text" placeholder="ej.: JORNADA DE LOS 10 AÑOS de IQ/BIO" />
+        </div>
+        <div class="col-12">
+          <label>Cantidad de categorías (1 a 5)</label>
+          <input id="catCount" type="number" min="1" max="5" value="5" />
+          <div class="muted">Cada categoría contiene exactamente <strong>5 preguntas</strong> (valores sugeridos: 200, 400, 600, 800, 1000).</div>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn secondary" id="buildCats">Generar categorías</button>
+      </div>
+    </section>
+
+    <section id="catsContainer"></section>
+
+    <section>
+      <h2>Final Jeopardy (opcional)</h2>
+      <fieldset>
+        <legend>Final Jeopardy</legend>
+        <label>Consigna</label>
+        <input id="fjPrompt" type="text" placeholder="Consigna de la pregunta final" />
+        <div class="row">
+          <div class="col-6">
+            <label>Opción A</label>
+            <input id="fjOpt0" type="text">
+          </div>
+          <div class="col-6">
+            <label>Opción B</label>
+            <input id="fjOpt1" type="text">
+          </div>
+          <div class="col-6">
+            <label>Opción C</label>
+            <input id="fjOpt2" type="text">
+          </div>
+          <div class="col-6">
+            <label>Opción D</label>
+            <input id="fjOpt3" type="text">
+          </div>
+          <div class="col-6">
+            <label>Índice correcto (0 a 3)</label>
+            <input id="fjCorrect" type="number" min="0" max="3" value="0">
+          </div>
+          <div class="col-6">
+            <label>Pista (opcional)</label>
+            <input id="fjHint" type="text" placeholder="ayuda / pista">
+          </div>
+        </div>
+      </fieldset>
+    </section>
+
+    <section style="margin-top:18px">
+      <button class="btn" id="downloadBtn">Descargar la nueva plantilla de Preguntas .JSON</button>
+    </section>
+  </main>
+
+  <footer>
+    <small class="muted">El JSON respeta la estructura: <code>{ event, categories[{title,questions[...]}], finalJeopardy }</code></small>
+  </footer>
+
+<script>
+(function(){
+  const catsContainer = document.getElementById('catsContainer');
+  const buildCatsBtn   = document.getElementById('buildCats');
+  const catCountInput  = document.getElementById('catCount');
+
+  function categoryTemplate(idx){
+    return `
+      <section>
+        <h2>Categoría ${idx+1}</h2>
+        <fieldset>
+          <legend>Datos de la categoría</legend>
+          <label>Título de la categoría</label>
+          <input type="text" name="cat_title_${idx}" placeholder="ej.: Radioprotección (BIO)">
+        </fieldset>
+
+        <div class="grid-qs">
+          ${[200,400,600,800,1000].map((val,qIndex)=>`
+            <div class="card col-12">
+              <div class="qhead">
+                <strong>Pregunta ${qIndex+1}</strong>
+                <span class="muted">Valor sugerido: ${val}</span>
+              </div>
+              <label>Valor</label>
+              <input type="number" name="q_value_${idx}_${qIndex}" min="0" value="${val}">
+              <label>Consigna / Enunciado</label>
+              <input type="text" name="q_prompt_${idx}_${qIndex}" placeholder="Escribí la consigna de la pregunta">
+              <label>Pista (opcional)</label>
+              <input type="text" name="q_hint_${idx}_${qIndex}" placeholder="pista / ayuda (opcional)">
+              <label>Imagen (URL opcional)</label>
+              <input type="text" name="q_image_${idx}_${qIndex}" placeholder="https://... (opcional)">
+
+              <div class="options">
+                ${[0,1,2,3].map(o=>`
+                  <div class="opt">
+                    <input type="radio" name="q_correct_${idx}_${qIndex}" value="${o}" ${o===0?'checked':''} title="Correcta">
+                    <input type="text" class="optText" name="q_opt_${idx}_${qIndex}_${o}" placeholder="Opción ${o+1}">
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function buildCategories(){
+    const n = Math.max(1, Math.min(5, parseInt(catCountInput.value||'5',10)));
+    catsContainer.innerHTML = '';
+    for (let i=0;i<n;i++){
+      const wrap = document.createElement('div');
+      wrap.innerHTML = categoryTemplate(i);
+      catsContainer.appendChild(wrap);
+    }
+    window.scrollTo({ top: catsContainer.offsetTop - 10, behavior: 'smooth' });
+  }
+
+  buildCatsBtn.addEventListener('click', buildCategories);
+  buildCategories(); // inicial
+
+  function gatherData(){
+    const fileName = (document.getElementById('fileName').value || 'preguntas').trim();
+    const eventName = (document.getElementById('eventName').value || '').trim();
+
+    const categories = [];
+    const sections = catsContainer.querySelectorAll('section');
+    sections.forEach((sec, cidx)=>{
+      const title = sec.querySelector(`[name="cat_title_${cidx}"]`)?.value?.trim() || `Categoría ${cidx+1}`;
+      const questions = [];
+      for (let qIndex=0; qIndex<5; qIndex++){
+        const value  = parseInt(sec.querySelector(`[name="q_value_${cidx}_${qIndex}"]`)?.value||'0',10);
+        const prompt = sec.querySelector(`[name="q_prompt_${cidx}_${qIndex}"]`)?.value?.trim() || '';
+        const hint   = sec.querySelector(`[name="q_hint_${cidx}_${qIndex}"]`)?.value?.trim() || '';
+        const image  = sec.querySelector(`[name="q_image_${cidx}_${qIndex}"]`)?.value?.trim() || '';
+        const correct = sec.querySelector(`[name="q_correct_${cidx}_${qIndex}"]:checked`);
+        const correctIndex = correct ? parseInt(correct.value,10) : 0;
+
+        const options = [];
+        for (let o=0;o<4;o++){
+          options.push(sec.querySelector(`[name="q_opt_${cidx}_${qIndex}_${o}"]`)?.value?.trim() || `Opción ${o+1}`);
+        }
+        const answer = options[correctIndex] || '';
+
+        questions.push({ value, prompt, answer, options, correctIndex, hint, image });
+      }
+      categories.push({ title, questions });
+    });
+
+    // Final Jeopardy (opcional)
+    const fjPrompt  = document.getElementById('fjPrompt').value.trim();
+    const fjOpt0    = document.getElementById('fjOpt0').value.trim();
+    const fjOpt1    = document.getElementById('fjOpt1').value.trim();
+    const fjOpt2    = document.getElementById('fjOpt2').value.trim();
+    const fjOpt3    = document.getElementById('fjOpt3').value.trim();
+    const fjCorrect = parseInt(document.getElementById('fjCorrect').value||'0',10);
+    const fjHint    = document.getElementById('fjHint').value.trim();
+    const fjOptions = [fjOpt0,fjOpt1,fjOpt2,fjOpt3].filter(v=>v!=='');
+
+    const payload = {
+      ...(eventName ? { event: eventName } : {}),
+      categories,
+      ...(fjPrompt && fjOptions.length ? {
+        finalJeopardy: {
+          prompt: fjPrompt,
+          options: fjOptions,
+          correctIndex: Math.min(Math.max(fjCorrect,0), Math.max(0,fjOptions.length-1)),
+          hint: fjHint || '',
+          // "answer" se define como la opción marcada:
+          get answer(){ return this.options[this.correctIndex] || ''; }
+        }
+      } : {})
+    };
+
+    // “Materializamos” answer de finalJeopardy si existe como propiedad normal
+    if (payload.finalJeopardy) {
+      payload.finalJeopardy = {
+        prompt: payload.finalJeopardy.prompt,
+        options: payload.finalJeopardy.options,
+        correctIndex: payload.finalJeopardy.correctIndex,
+        hint: payload.finalJeopardy.hint,
+        answer: payload.finalJeopardy.options[payload.finalJeopardy.correctIndex] || ''
+      };
+    }
+
+    return { fileName: fileName.replace(/\.[^.]+$/,''), payload };
+  }
+
+  // Descargar JSON
+  document.getElementById('downloadBtn').addEventListener('click', function(){
+    const { fileName, payload } = gatherData();
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = fileName + '.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+})();
+</script>
+</body>
+</html>

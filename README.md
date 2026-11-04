@@ -17,6 +17,8 @@ Profesor Adjunto Seminario de Informática IQ/BIO · Universidad Nacional de Jos
   - Respuesta incorrecta: resta el valor.
   - Sin respuesta (tiempo agotado): no cambia el puntaje.
 - Después de cada pregunta el turno pasa al otro equipo. Tocando el puntaje de un equipo se le puede dar el turno manualmente.
+- **Pista:** si el equipo pide la pista y acierta, suma la mitad del valor; si falla, resta el valor completo.
+- **☢ Comodín Radiación Doble:** aparece hasta dos veces por equipo en preguntas de 200 o 400. Si el equipo lo acepta, la pregunta se reemplaza por una de nivel 3 y vale el triple; si lo rechaza, el comodín se pierde.
 - **Daily Double:** casilleros ocultos en los que el equipo apuesta antes de ver la pregunta.
 - **Final Jeopardy:** al completar el tablero, ambos equipos apuestan y responden la misma pregunta; quien conduce marca cada respuesta.
 - Gana el equipo con mayor puntaje final.
@@ -41,13 +43,14 @@ Anatomía radiológica · Física de las radiaciones · Técnica y posicionamien
 |---|---|
 | `1`–`4` o `A`–`D` | Elegir una opción |
 | `H` | Mostrar la pista |
+| `R` | Aceptar el comodín |
 | `Enter` | Continuar |
 | `F` | Pantalla completa |
 | `S` | Activar o silenciar el sonido |
 
 ## Configuración
 
-Desde **Configuración** (protegida con contraseña) se puede elegir el tiempo por pregunta, la cantidad de casilleros Daily Double, activar el Final Jeopardy y el avance automático, e importar o exportar el banco de preguntas.
+Desde **Configuración** (protegida con contraseña) se puede elegir el tiempo por pregunta, la cantidad de casilleros Daily Double, activar el Final Jeopardy, el avance automático, la regla de la pista y el comodín, e importar o exportar el banco de preguntas.
 
 ## Preguntas
 
@@ -72,6 +75,8 @@ Formato de cada pregunta:
   "image": ""
 }
 ```
+
+Las preguntas del comodín (nivel 3) están en la lista `wildcardQuestions` del mismo archivo y también se editan desde el editor.
 
 ## Publicación
 

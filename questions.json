@@ -414,5 +414,97 @@
     ],
     "correctIndex": 2,
     "hint": "Un valor mayor que 1 reduce la dosis y el tiempo de estudio."
-  }
+  },
+  "wildcardQuestions": [
+    {
+      "category": "Resonancia magnética",
+      "level": 3,
+      "prompt": "En resonancia magnética, ¿qué tiempo de relajación describe la recuperación de la magnetización longitudinal?",
+      "answer": "T1",
+      "options": [
+        "T2",
+        "T1",
+        "T2*",
+        "Tiempo de eco (TE)"
+      ],
+      "correctIndex": 1,
+      "hint": "También se llama relajación espín-red.",
+      "image": ""
+    },
+    {
+      "category": "Ecografía",
+      "level": 3,
+      "prompt": "En ecografía, ¿qué artefacto aparece detrás de una estructura muy atenuante, como un cálculo vesicular?",
+      "answer": "Sombra acústica posterior",
+      "options": [
+        "Refuerzo acústico posterior",
+        "Reverberación",
+        "Imagen en espejo",
+        "Sombra acústica posterior"
+      ],
+      "correctIndex": 3,
+      "hint": "Es una banda oscura por debajo de la estructura.",
+      "image": ""
+    },
+    {
+      "category": "Medicina nuclear",
+      "level": 3,
+      "prompt": "¿Qué radiofármaco se utiliza habitualmente en el centellograma óseo?",
+      "answer": "99mTc-MDP (metilendifosfonato)",
+      "options": [
+        "99mTc-MDP (metilendifosfonato)",
+        "18F-FDG",
+        "Yodo-131",
+        "Citrato de galio-67"
+      ],
+      "correctIndex": 0,
+      "hint": "Es un difosfonato marcado con tecnecio.",
+      "image": ""
+    },
+    {
+      "category": "Tomografía computada",
+      "level": 3,
+      "prompt": "En TC de tórax, ¿qué ventana es la adecuada para evaluar el parénquima pulmonar?",
+      "answer": "Nivel cercano a −600 UH y ancho cercano a 1500 UH",
+      "options": [
+        "Nivel 40 UH y ancho 400 UH",
+        "Nivel 40 UH y ancho 80 UH",
+        "Nivel cercano a −600 UH y ancho cercano a 1500 UH",
+        "Nivel 300 UH y ancho 600 UH"
+      ],
+      "correctIndex": 2,
+      "hint": "El nivel es muy negativo y el ancho muy amplio.",
+      "image": ""
+    },
+    {
+      "category": "Protección radiológica",
+      "level": 3,
+      "prompt": "¿Qué principio de la protección radiológica exige que toda exposición médica produzca un beneficio neto para el paciente?",
+      "answer": "Justificación",
+      "options": [
+        "Optimización",
+        "Justificación",
+        "Limitación de dosis",
+        "Blindaje"
+      ],
+      "correctIndex": 1,
+      "hint": "Es el primero de los tres principios de la ICRP.",
+      "image": ""
+    },
+    {
+      "category": "Resonancia magnética",
+      "level": 3,
+      "prompt": "En resonancia magnética, ¿qué secuencia anula la señal del líquido cefalorraquídeo para evaluar lesiones periventriculares?",
+      "answer": "FLAIR",
+      "options": [
+        "STIR",
+        "Eco de gradiente",
+        "Difusión (DWI)",
+        "FLAIR"
+      ],
+      "correctIndex": 3,
+      "hint": "Es una secuencia de inversión-recuperación con atenuación de líquido.",
+      "image": ""
+    }
+  ]
 }

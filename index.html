@@ -99,6 +99,7 @@
         <span class="leyenda"><i class="nv nv1"></i>Nivel 1</span>
         <span class="leyenda"><i class="nv nv2"></i>Nivel 2</span>
         <span class="leyenda"><i class="nv nv3"></i>Nivel 3</span>
+        <span class="leyenda comodines" id="estado-comodines"></span>
         <button class="btn btn-texto btn-chico" id="btn-terminar">Terminar juego</button>
       </div>
     </main>
@@ -122,11 +123,24 @@
       </header>
 
       <p class="turno-pill" id="pq-turno"></p>
+
+      <!-- Comodín Radiación Doble -->
+      <div class="comodin" id="pq-comodin" hidden>
+        <div class="comodin-icono" aria-hidden="true">☢</div>
+        <div class="comodin-texto">
+          <strong>¡Comodín Radiación Doble!</strong>
+          <span id="pq-comodin-detalle"></span>
+        </div>
+        <div class="comodin-botones">
+          <button class="btn btn-comodin" id="pq-comodin-aceptar">Aceptar <kbd>R</kbd></button>
+          <button class="btn btn-secundario btn-chico" id="pq-comodin-rechazar">No, gracias</button>
+        </div>
+      </div>
       <p class="pregunta-texto" id="pq-texto"></p>
       <img class="pregunta-imagen" id="pq-imagen" alt="Imagen de la pregunta" hidden>
 
       <div class="pista">
-        <button class="btn btn-secundario btn-chico" id="pq-btn-pista">Mostrar pista <kbd>H</kbd></button>
+        <button class="btn btn-secundario btn-chico" id="pq-btn-pista"><span id="pq-btn-pista-texto">Mostrar pista</span> <kbd>H</kbd></button>
         <p class="pista-texto" id="pq-pista" hidden></p>
       </div>
 
@@ -193,6 +207,8 @@
         </label>
         <label class="interruptor"><input type="checkbox" id="cfg-final"> <span>Habilitar Final Jeopardy</span></label>
         <label class="interruptor"><input type="checkbox" id="cfg-auto"> <span>Continuar automáticamente después de responder</span></label>
+        <label class="interruptor"><input type="checkbox" id="cfg-pista"> <span>Con pista, la respuesta correcta suma la mitad del valor</span></label>
+        <label class="interruptor"><input type="checkbox" id="cfg-comodin"> <span>Comodín Radiación Doble (2 por equipo, en preguntas de 200 y 400)</span></label>
 
         <fieldset class="cfg-banco">
           <legend>Banco de preguntas</legend>
@@ -223,11 +239,13 @@
         <li>Compiten dos equipos por turnos. El equipo de turno elige una categoría y un valor del tablero.</li>
         <li>Cada pregunta tiene cuatro opciones. Respuesta <b class="ok">correcta</b>: suma los puntos. <b class="mal">Incorrecta</b>: los resta. Si se agota el tiempo, no suma ni resta.</li>
         <li>Los valores indican la dificultad: 200 y 400 son de nivel 1, 600 y 800 de nivel 2 y 1000 de nivel 3.</li>
+        <li><b>Pista:</b> si el equipo pide la pista y acierta, suma la mitad del valor. Si falla, resta el valor completo.</li>
+        <li><b>☢ Comodín Radiación Doble:</b> hasta dos veces por equipo, en una pregunta de 200 o 400. Si lo aceptan, la pregunta cambia por una de nivel 3 y vale el triple. Si lo rechazan, el comodín se pierde.</li>
         <li><b>Daily Double:</b> un casillero oculto en el que el equipo apuesta antes de ver la pregunta.</li>
         <li><b>Final Jeopardy:</b> al terminar el tablero, ambos equipos apuestan y responden la misma pregunta.</li>
         <li>Gana el equipo con mayor puntaje final.</li>
       </ol>
-      <p class="ayuda">Atajos: <kbd>1</kbd>–<kbd>4</kbd> o <kbd>A</kbd>–<kbd>D</kbd> eligen una opción · <kbd>H</kbd> pista ·
+      <p class="ayuda">Atajos: <kbd>1</kbd>–<kbd>4</kbd> o <kbd>A</kbd>–<kbd>D</kbd> eligen una opción · <kbd>H</kbd> pista · <kbd>R</kbd> aceptar comodín ·
         <kbd>Enter</kbd> continuar · <kbd>F</kbd> pantalla completa · <kbd>S</kbd> sonido</p>
       <button class="btn btn-primario" id="btn-cerrar-ayuda">Entendido</button>
     </div>

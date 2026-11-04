@@ -598,3 +598,39 @@ select option { background: #0b1a3d; }
   .barra-marca small { display: none; }
   .barra-marca strong { font-size: 0.95rem; }
 }
+
+/* Comodín Radiación Doble */
+.comodin {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0;
+  padding: 0.9rem 1.1rem;
+  border-radius: 18px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 224, 102, 0.12) 0 14px, rgba(0, 0, 0, 0.12) 14px 28px),
+    rgba(40, 32, 0, 0.6);
+  border: 2px solid var(--amarillo-1);
+  box-shadow: 0 0 24px rgba(255, 224, 102, 0.35);
+  animation: comodin-brillo 1.4s ease-in-out infinite;
+}
+@keyframes comodin-brillo { 50% { box-shadow: 0 0 40px rgba(255, 224, 102, 0.6); } }
+.comodin-icono {
+  width: 54px; height: 54px; flex-shrink: 0; border-radius: 50%;
+  display: grid; place-items: center; font-size: 2rem; line-height: 1;
+  background: var(--amarillo-1); color: #1c1600;
+  animation: girar 6s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+.comodin-texto { flex: 1; min-width: 200px; }
+.comodin-texto strong { display: block; color: var(--amarillo-1); font-size: 1.15rem; }
+.comodin-texto span { color: var(--texto); font-size: 0.95rem; }
+.comodin-botones { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.btn-comodin { background: linear-gradient(135deg, var(--amarillo-1), var(--amarillo-2)); color: #1c1600; box-shadow: 0 6px 20px rgba(255, 200, 60, 0.4); }
+.btn-comodin kbd { color: #1c1600; border-color: rgba(0, 0, 0, 0.25); background: rgba(255, 255, 255, 0.35); }
+.chip-nivel.comodin-chip { background: rgba(255, 224, 102, 0.2); color: var(--amarillo-1); }
+.valor-pista { font-size: 1rem; font-weight: 700; color: var(--amarillo-1); }
+.casillero .marca-jugada .rad { color: var(--amarillo-1); }
+.leyenda.comodines { color: var(--amarillo-1); }
+.casillero .marca-jugada { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.25em; text-align: center; }

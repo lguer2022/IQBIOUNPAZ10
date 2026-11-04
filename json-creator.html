@@ -58,6 +58,8 @@
 
     <section class="bloque" id="ed-final"></section>
 
+    <section class="bloque" id="ed-comodin"></section>
+
     <p class="ayuda">
       <b>Usar en este navegador</b> guarda el banco solo en esta computadora. Para que lo vean todos,
       <b>descargá questions.json</b> y reemplazá el archivo del mismo nombre en el repositorio de GitHub.
@@ -80,6 +82,7 @@
     var CLAVE_BANCO = "jeopardyBio.banco";
     var COLORES = ["var(--cat-1)", "var(--cat-2)", "var(--cat-3)", "var(--cat-4)", "var(--cat-5)"];
     var VALORES = [200, 400, 600, 800, 1000];
+    var CANT_COMODIN = 6;
     var LETRAS = ["A", "B", "C", "D"];
     var datos = null;
 
@@ -108,7 +111,13 @@
       });
       var fj = Object.assign({ category: "", prompt: "", answer: "", options: ["", "", "", ""], correctIndex: 0, hint: "" }, d.finalJeopardy || {});
       fj.options = (fj.options || []).concat(["", "", "", ""]).slice(0, 4);
-      return { event: d.event || "", categories: cats, finalJeopardy: fj };
+      var pozo = (d.wildcardQuestions || []).slice(0, CANT_COMODIN).map(function (q) {
+        var x = Object.assign({ category: "", level: 3, prompt: "", answer: "", options: ["", "", "", ""], correctIndex: 0, hint: "", image: "" }, q);
+        x.options = (x.options || []).concat(["", "", "", ""]).slice(0, 4);
+        return x;
+      });
+      while (pozo.length < CANT_COMODIN) pozo.push({ category: "", level: 3, prompt: "", answer: "", options: ["", "", "", ""], correctIndex: 0, hint: "", image: "" });
+      return { event: d.event || "", categories: cats, finalJeopardy: fj, wildcardQuestions: pozo };
     }
 
     function htmlOpciones(prefijo, q) {
@@ -144,6 +153,15 @@
         '<label class="campo"><span>Pista (opcional)</span><input type="text" data-campo="hint" value="' + esc(fj.hint) + '"></label></div>' +
         '<div class="pregunta-ed" data-final="1"><label class="campo"><span>Consigna</span><textarea data-campo="prompt" rows="2">' + esc(fj.prompt) + "</textarea></label>" +
         htmlOpciones("final", fj) + "</div>";
+      $("ed-comodin").innerHTML = '<h2><i style="background:var(--amarillo-1)"></i>☢ Preguntas del Comodín Radiación Doble (nivel 3)</h2>' +
+        '<p class="ayuda">Reemplazan a una pregunta de 200 o 400 cuando el equipo acepta el comodín. Se necesitan al menos 4 (2 por equipo). Las que queden vacías no se usan.</p>' +
+        datos.wildcardQuestions.map(function (q, i) {
+          return '<div class="pregunta-ed" data-comodin="' + i + '"><div class="titulo">Comodín ' + (i + 1) + "</div>" +
+            '<div class="grilla g2"><label class="campo"><span>Tema</span><input type="text" data-campo="category" value="' + esc(q.category) + '"></label>' +
+            '<label class="campo"><span>Pista (opcional)</span><input type="text" data-campo="hint" value="' + esc(q.hint) + '"></label></div>' +
+            '<label class="campo"><span>Consigna</span><textarea data-campo="prompt" rows="2">' + esc(q.prompt) + "</textarea></label>" +
+            htmlOpciones("com" + i, q) + "</div>";
+        }).join("");
     }
 
     function leerFormulario() {
@@ -160,6 +178,15 @@
       fj.category = fin.querySelector('[data-campo="category"]').value.trim();
       fj.hint = fin.querySelector('[data-campo="hint"]').value.trim();
       if (fj.prompt) d.finalJeopardy = fj;
+      d.wildcardQuestions = [];
+      document.querySelectorAll("[data-comodin]").forEach(function (div) {
+        var q = leerPregunta(div, false);
+        q.category = div.querySelector('[data-campo="category"]').value.trim();
+        q.hint = div.querySelector('[data-campo="hint"]').value.trim();
+        q.level = 3;
+        q.image = "";
+        if (q.prompt) d.wildcardQuestions.push(q);
+      });
       return d;
     }
 
@@ -189,6 +216,11 @@
           if (q.options.filter(Boolean).length < 2) return "La pregunta " + (f + 1) + " de \"" + cat.title + "\" necesita al menos dos opciones.";
         }
       }
+      for (var w = 0; w < d.wildcardQuestions.length; w++) {
+        var cq = d.wildcardQuestions[w];
+        if (!cq.options[cq.correctIndex]) return "La opción correcta de una pregunta del comodín está vacía.";
+        if (cq.options.filter(Boolean).length < 2) return "Cada pregunta del comodín necesita al menos dos opciones.";
+      }
       return null;
     }
 
@@ -197,6 +229,7 @@
         c.questions.forEach(function (q) { recortarOpciones(q); });
       });
       if (d.finalJeopardy) recortarOpciones(d.finalJeopardy);
+      d.wildcardQuestions.forEach(recortarOpciones);
       return d;
     }
     function recortarOpciones(q) {

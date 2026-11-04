@@ -6,6 +6,9 @@
  * Reglas:
  *  - Dos equipos por turnos. El turno pasa al otro equipo después de cada pregunta.
  *  - Correcta: suma el valor. Incorrecta: lo resta. Sin respuesta: no cambia el puntaje.
+ *  - Pista: si se usa y la respuesta es correcta, suma la mitad del valor.
+ *  - Comodín Radiación Doble: hasta 2 por equipo en preguntas de nivel 1 (200/400).
+ *    Si se acepta, la pregunta se reemplaza por una de nivel 3 y vale el triple.
  *  - Daily Double: el equipo apuesta antes de ver la pregunta.
  *  - Final Jeopardy: ambos equipos apuestan y quien conduce marca cada respuesta.
  */
@@ -24,7 +27,9 @@
   var COLORES_CAT = ["var(--cat-1)", "var(--cat-2)", "var(--cat-3)", "var(--cat-4)", "var(--cat-5)"];
   var AUTO_MS = 4500;
 
-  var config = Object.assign({ tiempo: 30, dd: 1, final: true, auto: true }, leer(CLAVE_CONFIG, {}));
+  var COMODINES_POR_EQUIPO = 2;
+
+  var config = Object.assign({ tiempo: 30, dd: 1, final: true, auto: true, pistaMitad: true, comodin: true }, leer(CLAVE_CONFIG, {}));
   var banco = null;          // banco activo para nuevas partidas
   var bancoPropio = false;   // true si fue importado en este navegador
   var partida = null;
@@ -90,6 +95,10 @@
         q.value = Number(q.value) || (j + 1) * 200;
       });
     });
+    datos.wildcardQuestions = (Array.isArray(datos.wildcardQuestions) ? datos.wildcardQuestions : []).filter(function (q) {
+      var k = Number(q && q.correctIndex);
+      return q && q.prompt && Array.isArray(q.options) && q.options.length >= 2 && k >= 0 && k < q.options.length;
+    });
     return datos;
   }
 
@@ -148,7 +157,10 @@
       dd: elegirDailyDoubles(copia, config.dd),
       final: hayFinal(copia) && config.final,
       fase: "tablero",
-      finalEstado: null
+      finalEstado: null,
+      comodines: [COMODINES_POR_EQUIPO, COMODINES_POR_EQUIPO],
+      pozo: mezclar(copia.wildcardQuestions.map(function (q, i) { return i; })),
+      pozoPos: 0
     };
     guardar();
     Sonidos.reproducir("inicio");
@@ -171,6 +183,50 @@
   }
 
   function guardar() { if (partida) escribir(CLAVE_PARTIDA, partida); }
+
+  function mezclar(lista) {
+    for (var i = lista.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = lista[i]; lista[i] = lista[j]; lista[j] = t;
+    }
+    return lista;
+  }
+
+  /* ---------- Comodín Radiación Doble ---------- */
+
+  function asegurarComodines() {
+    if (!partida.comodines) partida.comodines = [0, 0];
+    if (!partida.pozo) { partida.pozo = []; partida.pozoPos = 0; }
+  }
+
+  function casillerosNivel1Libres() {
+    var n = 0;
+    partida.banco.categories.forEach(function (c, ci) {
+      c.questions.forEach(function (q, f) {
+        if (nivelDe(q, f) === 1 && !partida.jugadas[ci + "-" + f]) n++;
+      });
+    });
+    return n;
+  }
+
+  /* Decide si el comodín aparece en esta pregunta, repartiendo las apariciones a lo largo del juego. */
+  function decidirComodin(q, fila) {
+    asegurarComodines();
+    if (!config.comodin || nivelDe(q, fila) !== 1) return false;
+    var t = partida.turno;
+    var quedan = partida.comodines[t];
+    var pozoLibre = partida.pozo.length - partida.pozoPos;
+    if (quedan <= 0 || pozoLibre <= 0) return false;
+    var oportunidades = Math.max(1, Math.ceil(casillerosNivel1Libres() / 2));
+    return Math.random() < quedan / oportunidades;
+  }
+
+  function textoComodines() {
+    if (!partida || !config.comodin || !partida.comodines) return "";
+    return "☢ Comodines: " + partida.equipos.map(function (e, i) {
+      return e.nombre + " " + partida.comodines[i];
+    }).join(" · ");
+  }
 
   /* ---------- Tablero ---------- */
 
@@ -201,7 +257,8 @@
         var j = partida.jugadas[clave];
         var nivel = nivelDe(q, f);
         if (j) {
-          var simbolo = j.resultado === "ok" ? "✓ " : j.resultado === "mal" ? "✗ " : "⏱ ";
+          var simbolo = (j.comodin ? '<span class="rad">☢</span> ' : "") +
+            (j.resultado === "ok" ? "✓ " : j.resultado === "mal" ? "✗ " : "⏱ ");
           var clase = j.resultado === "ok" ? "ok" : j.resultado === "mal" ? "mal" : "";
           html += '<button class="casillero nv' + nivel + '" disabled aria-label="Ya jugada">' + q.value +
             '<span class="marca-jugada ' + clase + '">' + simbolo + escapar(partida.equipos[j.equipo].nombre) + "</span></button>";
@@ -212,6 +269,7 @@
       }
     }
     t.innerHTML = html;
+    $("estado-comodines").textContent = textoComodines();
     renderMarcador(saltoEquipo);
   }
 
@@ -226,8 +284,13 @@
     if (partida.dd.indexOf(clave) >= 0) {
       pedirApuestaDD(clave, q);
     } else {
-      Sonidos.reproducir("abrir");
-      mostrarPregunta({ clave: clave, cat: partes[0], fila: partes[1], q: q, apuesta: null });
+      var oferta = decidirComodin(q, partes[1]);
+      if (oferta) {
+        partida.comodines[partida.turno]--;
+        guardar();
+      }
+      Sonidos.reproducir(oferta ? "geiger" : "abrir");
+      mostrarPregunta({ clave: clave, cat: partes[0], fila: partes[1], q: q, apuesta: null, ofertaComodin: oferta, valorOriginal: q.value });
     }
   }
 
@@ -292,15 +355,26 @@
   function mostrarPregunta(p) {
     actual = p;
     actual.respondida = false;
+    actual.pistaUsada = false;
     var esFinal = p.final === true;
     var q = p.q;
 
-    $("pq-categoria").textContent = esFinal ? "Final Jeopardy · " + (q.category || "Pregunta final") : partida.banco.categories[p.cat].title;
-    $("pq-valor").textContent = esFinal ? "Apuesta final" : (p.apuesta !== null ? "Apuesta " + formatoPuntos(p.apuesta) : q.value);
+    var categoria = esFinal ? "Final Jeopardy · " + (q.category || "Pregunta final") : partida.banco.categories[p.cat].title;
+    if (p.comodin) categoria += " · Comodín" + (q.category ? ": " + q.category : "");
+    $("pq-categoria").textContent = categoria;
     var chip = $("pq-nivel");
     if (esFinal) { chip.textContent = "Final"; chip.className = "chip-nivel dd"; }
     else if (p.apuesta !== null) { chip.textContent = "Daily Double"; chip.className = "chip-nivel dd"; }
+    else if (p.comodin) { chip.textContent = "☢ Radiación Doble · Nivel 3"; chip.className = "chip-nivel comodin-chip"; }
     else { chip.textContent = "Nivel " + nivelDe(q, p.fila); chip.className = "chip-nivel"; }
+    renderValor();
+
+    var oferta = $("pq-comodin");
+    oferta.hidden = !(p.ofertaComodin && !p.comodin);
+    if (!oferta.hidden) {
+      $("pq-comodin-detalle").textContent = "Si lo aceptan, esta pregunta se cambia por una de nivel 3 y vale el triple: " +
+        formatoPuntos(p.valorOriginal * 3) + " puntos.";
+    }
 
     $("pq-turno").textContent = esFinal ? "Responden ambos equipos" : "Turno de " + partida.equipos[partida.turno].nombre;
     $("pq-texto").textContent = q.prompt;
@@ -310,7 +384,9 @@
 
     $("pq-pista").hidden = true;
     $("pq-pista").textContent = q.hint || "";
-    $("pq-btn-pista").hidden = !q.hint;
+    $("pq-btn-pista").hidden = !q.hint || esFinal;
+    $("pq-btn-pista").disabled = false;
+    $("pq-btn-pista-texto").textContent = config.pistaMitad ? "Mostrar pista (vale la mitad)" : "Mostrar pista";
 
     $("pq-opciones").innerHTML = q.options.map(function (op, i) {
       return '<button class="opcion" data-i="' + i + '"' + (esFinal ? " disabled" : "") + '><span class="letra-op">' + LETRAS[i] + "</span><span>" + escapar(op) + "</span></button>";
@@ -327,6 +403,61 @@
     $("capa-pregunta").hidden = false;
 
     iniciarReloj(esFinal ? Math.max(config.tiempo, 60) : config.tiempo);
+  }
+
+  function valorBase() {
+    if (actual.apuesta !== null) return actual.apuesta;
+    if (actual.comodin) return actual.valorOriginal * 3;
+    return actual.q.value;
+  }
+
+  function valorEnJuego() {
+    var v = valorBase();
+    if (actual.pistaUsada && config.pistaMitad) v = Math.round(v / 2);
+    return v;
+  }
+
+  function renderValor() {
+    if (actual.final) { $("pq-valor").textContent = "Apuesta final"; return; }
+    var base = valorBase();
+    var prefijo = actual.apuesta !== null ? "Apuesta " : "";
+    if (actual.pistaUsada && config.pistaMitad) {
+      $("pq-valor").innerHTML = prefijo + formatoPuntos(valorEnJuego()) +
+        ' <span class="valor-pista">(con pista; error: −' + formatoPuntos(base) + ")</span>";
+    } else {
+      $("pq-valor").textContent = prefijo + formatoPuntos(base);
+    }
+  }
+
+  function usarPista() {
+    if (!actual || actual.final) return;
+    var visible = !$("pq-pista").hidden;
+    if (visible) { $("pq-pista").hidden = true; return; }
+    $("pq-pista").hidden = false;
+    if (!actual.respondida && !actual.pistaUsada) {
+      actual.pistaUsada = true;
+      renderValor();
+    }
+  }
+
+  function aceptarComodin() {
+    if (!actual || !actual.ofertaComodin || actual.comodin || actual.respondida) return;
+    var idx = partida.pozo[partida.pozoPos++];
+    var nueva = partida.banco.wildcardQuestions[idx];
+    if (!nueva) return;
+    guardar();
+    Sonidos.reproducir("comodin");
+    var p = {
+      clave: actual.clave, cat: actual.cat, fila: actual.fila, q: nueva, apuesta: null,
+      ofertaComodin: true, comodin: true, valorOriginal: actual.valorOriginal
+    };
+    mostrarPregunta(p);
+  }
+
+  function rechazarComodin() {
+    if (!actual || !actual.ofertaComodin) return;
+    $("pq-comodin").hidden = true;
+    actual.ofertaComodin = false;
   }
 
   function iniciarReloj(segundos) {
@@ -370,18 +501,21 @@
     detenerReloj();
     var q = actual.q;
     var acierto = i === Number(q.correctIndex);
-    var valor = actual.apuesta !== null ? actual.apuesta : q.value;
+    var valor = acierto ? valorEnJuego() : valorBase();
     var delta = acierto ? valor : -valor;
     var eq = partida.turno;
     partida.equipos[eq].puntos += delta;
-    partida.jugadas[actual.clave] = { equipo: eq, resultado: acierto ? "ok" : "mal", delta: delta };
+    partida.jugadas[actual.clave] = { equipo: eq, resultado: acierto ? "ok" : "mal", delta: delta, comodin: !!actual.comodin };
+    $("pq-comodin").hidden = true;
     guardar();
     marcarOpciones(i);
     Sonidos.reproducir(acierto ? "correcta" : "incorrecta");
 
     var txt = $("pq-resultado-texto");
     if (acierto) {
-      txt.textContent = "¡Correcto! +" + formatoPuntos(valor) + " para " + partida.equipos[eq].nombre;
+      txt.textContent = "¡Correcto! +" + formatoPuntos(valor) + " para " + partida.equipos[eq].nombre +
+        (actual.pistaUsada && config.pistaMitad ? " (con pista, la mitad)" : "") +
+        (actual.comodin ? " ☢" : "");
       txt.className = "resultado-texto ok";
     } else {
       txt.textContent = "Incorrecto. −" + formatoPuntos(valor) + ". La respuesta era: " + q.options[q.correctIndex];
@@ -396,7 +530,8 @@
     if (actual.final) { revelarFinal(); return; }
     actual.respondida = true;
     var q = actual.q;
-    partida.jugadas[actual.clave] = { equipo: partida.turno, resultado: "tiempo", delta: 0 };
+    partida.jugadas[actual.clave] = { equipo: partida.turno, resultado: "tiempo", delta: 0, comodin: !!actual.comodin };
+    $("pq-comodin").hidden = true;
     guardar();
     marcarOpciones(-1);
     var txt = $("pq-resultado-texto");
@@ -574,6 +709,8 @@
     $("cfg-dd").value = String(config.dd);
     $("cfg-final").checked = !!config.final;
     $("cfg-auto").checked = !!config.auto;
+    $("cfg-pista").checked = !!config.pistaMitad;
+    $("cfg-comodin").checked = !!config.comodin;
     actualizarEstadoBanco();
     $("capa-config").hidden = false;
   }
@@ -583,7 +720,8 @@
     $("cfg-banco-estado").textContent = (bancoPropio
       ? "Usando un banco importado en este navegador"
       : "Usando el banco publicado (questions.json)") +
-      ": " + banco.categories.length + " categorías, " + totalPreguntas(banco) + " preguntas" +
+      ": " + banco.categories.length + " categorías, " + totalPreguntas(banco) + " preguntas, " +
+      banco.wildcardQuestions.length + " preguntas de comodín" +
       (hayFinal(banco) ? " y Final Jeopardy." : ".") +
       " Los cambios de banco se aplican al empezar una partida nueva.";
     $("cfg-restaurar").hidden = !bancoPropio;
@@ -595,11 +733,14 @@
       tiempo: Number($("cfg-tiempo").value),
       dd: Number($("cfg-dd").value),
       final: $("cfg-final").checked,
-      auto: $("cfg-auto").checked
+      auto: $("cfg-auto").checked,
+      pistaMitad: $("cfg-pista").checked,
+      comodin: $("cfg-comodin").checked
     };
     escribir(CLAVE_CONFIG, config);
     if (partida && partida.fase === "tablero") partida.final = hayFinal(partida.banco) && config.final;
     guardar();
+    if (partida && $("pantalla-tablero").classList.contains("activa")) renderTablero();
     $("capa-config").hidden = true;
     aviso("Configuración guardada");
   }
@@ -663,6 +804,8 @@
     var guardada = leer(CLAVE_PARTIDA, null);
     if (!guardada) return;
     partida = guardada;
+    if (!partida.banco.wildcardQuestions) partida.banco.wildcardQuestions = [];
+    asegurarComodines();
     mostrarPantalla("pantalla-tablero");
     renderTablero();
     if (partida.fase === "final" || (partida.fase === "tablero" && tableroCompleto())) {
@@ -688,7 +831,8 @@
       var idx = ["1", "2", "3", "4"].indexOf(k);
       if (idx < 0) idx = ["a", "b", "c", "d"].indexOf(k);
       if (idx >= 0 && actual && idx < actual.q.options.length) { e.preventDefault(); responder(idx); return; }
-      if (k === "h") { $("pq-btn-pista").click(); return; }
+      if (k === "h") { if (!$("pq-btn-pista").hidden) usarPista(); return; }
+      if (k === "r" && !$("pq-comodin").hidden) { aceptarComodin(); return; }
       if (e.key === "Enter") { e.preventDefault(); if (!$("pq-continuar").disabled) continuar(); return; }
     }
     if (k === "f") pantallaCompleta();
@@ -739,9 +883,9 @@
       var b = e.target.closest(".opcion");
       if (b && !b.disabled) responder(Number(b.dataset.i));
     });
-    $("pq-btn-pista").addEventListener("click", function () {
-      $("pq-pista").hidden = !$("pq-pista").hidden;
-    });
+    $("pq-btn-pista").addEventListener("click", usarPista);
+    $("pq-comodin-aceptar").addEventListener("click", aceptarComodin);
+    $("pq-comodin-rechazar").addEventListener("click", rechazarComodin);
     $("pq-continuar").addEventListener("click", continuar);
     $("pq-juicio").addEventListener("click", juzgarFinal);
 

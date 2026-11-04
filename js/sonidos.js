@@ -64,6 +64,36 @@
       [392, 523, 659, 784].forEach(function (f, i) { tono(f, i * 0.11, 0.3, "triangle", 0.18); });
       tono(1046, 0.48, 0.7, "triangle", 0.22);
     },
+    geiger: function () {
+      var c = contexto();
+      if (!c) return;
+      var dur = 1.3, n = Math.floor(c.sampleRate * dur);
+      var buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      var t = 0;
+      while (t < dur) {
+        var i0 = Math.floor(t * c.sampleRate);
+        for (var k = 0; k < 90 && i0 + k < n; k++) d[i0 + k] = (Math.random() * 2 - 1) * Math.exp(-k / 14);
+        t += 0.012 + Math.random() * 0.07 * (1 - t / dur * 0.7);
+      }
+      var src = c.createBufferSource(), gan = c.createGain();
+      gan.gain.value = 0.5;
+      src.buffer = buf; src.connect(gan).connect(c.destination); src.start();
+      tono(740, 0.15, 0.25, "triangle", 0.12);
+      tono(988, 0.32, 0.35, "triangle", 0.12);
+    },
+    comodin: function () {
+      var c = contexto();
+      if (!c) return;
+      var t = c.currentTime, osc = c.createOscillator(), gan = c.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(180, t);
+      osc.frequency.exponentialRampToValueAtTime(1400, t + 0.7);
+      gan.gain.setValueAtTime(0.0001, t);
+      gan.gain.exponentialRampToValueAtTime(0.12, t + 0.05);
+      gan.gain.exponentialRampToValueAtTime(0.0001, t + 0.8);
+      osc.connect(gan).connect(c.destination); osc.start(t); osc.stop(t + 0.85);
+      [1046, 1318, 1568].forEach(function (f, i) { tono(f, 0.75 + i * 0.1, 0.35, "triangle", 0.16); });
+    },
     apuesta: function () { tono(880, 0, 0.1, "sine", 0.18); tono(1175, 0.08, 0.16, "sine", 0.18); },
     aplausos: function () {
       var c = contexto();

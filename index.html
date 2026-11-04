@@ -1,80 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JORNADA DE LOS 10 AÑOS de IQ/BIO - Jeopardy</title>
-    <meta name="description" content="Juego de Jeopardy universitario para la Jornada de los 10 años de las carreras de Instrumentación Quirúrgica y Producción de Bioimágenes de UNPAZ" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-BVg1DV89.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BjBqgOxA.css">
-<!--    <link rel="stylesheet" href="/assets/responsive-overrides.css"> -->
-    <link rel="stylesheet" href="/assets/responsive-overrides.css">
-  </head>
- 
-  <script>
-  (function () {
-    // Clave “blanda”
-    var SETTINGS_PASSWORD = "1718*";
-    // Guardamos si ya se autenticó para no pedir cada vez
-    var TOKEN_KEY = "settings_unlocked";
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeopardy Bioimágenes · Jornada 2026</title>
+  <meta name="description" content="Jeopardy académico para la Celebración de la Jornada de Bioimágenes 2026 de la Licenciatura en Producción de Bioimágenes, UNPAZ.">
+  <meta name="author" content="Mg. Lic. Prof. Leandro Guerschberg">
+  <link rel="icon" href="img/emblema.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
 
-    // Heurística para detectar el botón/ícono de Configuración (engranaje)
-    var SELECTORS = [
-      'button[aria-label*="config"]',
-      'button[aria-label*="ajuste"]',
-      '[title*="config"]',
-      '[title*="ajuste"]',
-      '.settings',
-      '.config',
-      '.gear',
-      '[data-role="settings"]'
-    ];
+  <!-- ============ INICIO ============ -->
+  <section id="pantalla-inicio" class="pantalla activa">
+    <div class="inicio">
+      <header class="marca">
+        <div class="moneda" role="img" aria-label="Logo de la UNPAZ que gira y da paso al emblema del juego">
+          <div class="moneda-giro">
+            <div class="cara cara-frente"><img src="img/unpaz.png" alt=""></div>
+            <div class="cara cara-dorso"><img src="img/emblema.svg" alt=""></div>
+          </div>
+        </div>
+        <p class="evento" id="titulo-evento">Celebración de la Jornada de Bioimágenes 2026</p>
+        <h1>Jeopardy <span>Bioimágenes</span></h1>
+        <p class="bajada">Licenciatura en Producción de Bioimágenes</p>
+        <p class="bajada bajada-2">Departamento de Ciencias de la Salud y Deporte, UNPAZ</p>
+      </header>
 
-    function isSettingsTrigger(node) {
-      var el = node;
-      var steps = 0;
-      while (el && steps < 5) { // miramos algunos ancestros por si el click va al <svg>
-        for (var i = 0; i < SELECTORS.length; i++) {
-          try {
-            if (el.matches && el.matches(SELECTORS[i])) return true;
-          } catch (e) {}
-        }
-        el = el.parentElement;
-        steps++;
-      }
-      return false;
-    }
+      <form id="form-inicio" class="panel-config" autocomplete="off">
+        <fieldset>
+          <legend>Equipos</legend>
+          <div class="fila-2">
+            <label class="campo">
+              <span>Equipo 1</span>
+              <input id="nombre-0" type="text" maxlength="24" value="Equipo Azul">
+            </label>
+            <label class="campo">
+              <span>Equipo 2</span>
+              <input id="nombre-1" type="text" maxlength="24" value="Equipo Naranja">
+            </label>
+          </div>
+        </fieldset>
 
-    function ensureAuth(evt) {
-      // si ya se autenticó, dejamos pasar
-      if (sessionStorage.getItem(TOKEN_KEY) === "1") return true;
+        <fieldset>
+          <legend>Categorías</legend>
+          <ul class="lista-categorias" id="lista-categorias"></ul>
+          <p class="ayuda">Filas de 200 y 400: nivel 1 · 600 y 800: nivel 2 · 1000: nivel 3.</p>
+        </fieldset>
 
-      var ok = prompt("Ingrese la contraseña para acceder a la configuración") === SETTINGS_PASSWORD;
-      if (ok) {
-        sessionStorage.setItem(TOKEN_KEY, "1");
-        return true;
-      } else {
-        alert("Contraseña incorrecta");
-        // frenamos el evento ANTES de que llegue a React
-        evt.preventDefault();
-        evt.stopImmediatePropagation();
-        return false;
-      }
-    }
+        <div class="acciones-inicio">
+          <button type="submit" class="btn btn-primario btn-grande">¡A jugar!</button>
+          <button type="button" id="btn-continuar" class="btn btn-secundario" hidden>Continuar partida</button>
+          <button type="button" id="btn-ayuda" class="btn btn-texto">Cómo se juega</button>
+          <button type="button" id="btn-config-inicio" class="btn btn-texto">Configuración</button>
+        </div>
+      </form>
 
-    // Interceptamos el click EN CAPTURA para ganarle al manejador de React
-    document.addEventListener("click", function (evt) {
-      if (isSettingsTrigger(evt.target)) {
-        ensureAuth(evt);
-      }
-    }, true);
-  })();
-</script>
+      <footer class="autoria">
+        © 2026 · <strong>Mg. Lic. Prof. Leandro Guerschberg</strong><br>
+        Profesor Adjunto Seminario de Informática IQ/BIO · Universidad Nacional de José C. Paz
+      </footer>
+    </div>
+  </section>
 
-  <body>
-    <div id="root"></div>
-  </body>
+  <!-- ============ TABLERO ============ -->
+  <section id="pantalla-tablero" class="pantalla">
+    <header class="barra-juego">
+      <div class="barra-marca">
+        <img src="img/emblema.svg" alt="" class="mini-logo">
+        <div>
+          <strong>Jeopardy Bioimágenes</strong>
+          <small id="evento-barra">Jornada 2026</small>
+        </div>
+      </div>
+      <div class="marcador" id="marcador"></div>
+      <div class="controles">
+        <button class="ctrl ctrl-sec" id="btn-sonido" title="Sonido (S)" aria-label="Activar o silenciar sonido">
+          <svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>
+        </button>
+        <button class="ctrl ctrl-sec" id="btn-pantalla" title="Pantalla completa (F)" aria-label="Pantalla completa">
+          <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+        </button>
+        <button class="ctrl ctrl-sec" id="btn-config" title="Configuración" aria-label="Configuración">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        </button>
+        <button class="ctrl ctrl-sec" id="btn-salir" title="Volver al inicio" aria-label="Volver al inicio">
+          <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="tablero-zona">
+      <div class="tablero" id="tablero"></div>
+      <div class="pie-tablero">
+        <span class="leyenda"><i class="nv nv1"></i>Nivel 1</span>
+        <span class="leyenda"><i class="nv nv2"></i>Nivel 2</span>
+        <span class="leyenda"><i class="nv nv3"></i>Nivel 3</span>
+        <button class="btn btn-texto btn-chico" id="btn-terminar">Terminar juego</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- ============ PREGUNTA ============ -->
+  <div class="capa" id="capa-pregunta" hidden>
+    <div class="tarjeta-pregunta">
+      <header class="pregunta-cabecera">
+        <div>
+          <p class="pregunta-categoria" id="pq-categoria"></p>
+          <p class="pregunta-valor"><span id="pq-valor"></span> <span class="chip-nivel" id="pq-nivel"></span></p>
+        </div>
+        <div class="reloj" id="pq-reloj">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="aro-fondo" cx="50" cy="50" r="45"/>
+            <circle class="aro" id="pq-aro" cx="50" cy="50" r="45"/>
+          </svg>
+          <span id="pq-segundos">30</span>
+        </div>
+      </header>
+
+      <p class="turno-pill" id="pq-turno"></p>
+      <p class="pregunta-texto" id="pq-texto"></p>
+      <img class="pregunta-imagen" id="pq-imagen" alt="Imagen de la pregunta" hidden>
+
+      <div class="pista">
+        <button class="btn btn-secundario btn-chico" id="pq-btn-pista">Mostrar pista <kbd>H</kbd></button>
+        <p class="pista-texto" id="pq-pista" hidden></p>
+      </div>
+
+      <div class="opciones" id="pq-opciones"></div>
+
+      <div class="resultado" id="pq-resultado" hidden>
+        <p class="resultado-texto" id="pq-resultado-texto"></p>
+        <button class="btn btn-primario" id="pq-continuar">Continuar <kbd>Enter</kbd></button>
+        <div class="barra-auto" id="pq-barra-auto"><i></i></div>
+      </div>
+
+      <!-- Final: el conductor marca cada equipo -->
+      <div class="final-juicio" id="pq-juicio" hidden></div>
+    </div>
+  </div>
+
+  <!-- ============ APUESTAS (Daily Double y Final) ============ -->
+  <div class="capa" id="capa-apuesta" hidden>
+    <div class="tarjeta-capa">
+      <p class="capa-sub" id="ap-sub">Daily Double</p>
+      <h2 id="ap-titulo">¡Daily Double!</h2>
+      <p class="capa-detalle" id="ap-detalle"></p>
+      <div class="apuestas" id="ap-campos"></div>
+      <button class="btn btn-primario btn-grande" id="ap-confirmar">Confirmar apuesta</button>
+    </div>
+  </div>
+
+  <!-- ============ RESULTADOS ============ -->
+  <div class="capa" id="capa-final" hidden>
+    <div class="tarjeta-capa tarjeta-final">
+      <p class="capa-sub">Fin del juego</p>
+      <h2 id="final-titulo"></h2>
+      <div class="tabla-final" id="tabla-final"></div>
+      <div class="acciones-final">
+        <button class="btn btn-secundario" id="btn-ver-tablero">Ver tablero</button>
+        <button class="btn btn-secundario" id="btn-nuevo">Jugar de nuevo</button>
+        <button class="btn btn-primario" id="btn-inicio-final">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONFIGURACIÓN ============ -->
+  <div class="capa" id="capa-config" hidden>
+    <div class="tarjeta-capa tarjeta-config">
+      <h2>Configuración</h2>
+      <form id="form-config">
+        <label class="campo">
+          <span>Tiempo por pregunta</span>
+          <select id="cfg-tiempo">
+            <option value="15">15 segundos</option>
+            <option value="30">30 segundos</option>
+            <option value="45">45 segundos</option>
+            <option value="60">60 segundos</option>
+            <option value="0">Sin reloj</option>
+          </select>
+        </label>
+        <label class="campo">
+          <span>Daily Double</span>
+          <select id="cfg-dd">
+            <option value="0">Desactivado</option>
+            <option value="1">1 casillero</option>
+            <option value="2">2 casilleros</option>
+          </select>
+        </label>
+        <label class="interruptor"><input type="checkbox" id="cfg-final"> <span>Habilitar Final Jeopardy</span></label>
+        <label class="interruptor"><input type="checkbox" id="cfg-auto"> <span>Continuar automáticamente después de responder</span></label>
+
+        <fieldset class="cfg-banco">
+          <legend>Banco de preguntas</legend>
+          <p class="ayuda" id="cfg-banco-estado"></p>
+          <div class="acciones-cfg">
+            <label class="btn btn-secundario btn-chico">Importar JSON
+              <input type="file" id="cfg-importar" accept=".json,application/json" hidden>
+            </label>
+            <button type="button" class="btn btn-secundario btn-chico" id="cfg-exportar">Exportar JSON</button>
+            <a class="btn btn-secundario btn-chico" href="json-creator.html">Editor de preguntas</a>
+            <button type="button" class="btn btn-peligro btn-chico" id="cfg-restaurar">Usar banco publicado</button>
+          </div>
+        </fieldset>
+
+        <div class="acciones-final">
+          <button type="button" class="btn btn-secundario" id="cfg-cancelar">Cancelar</button>
+          <button type="submit" class="btn btn-primario">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ AYUDA ============ -->
+  <div class="capa" id="capa-ayuda" hidden>
+    <div class="tarjeta-capa tarjeta-ayuda">
+      <h2>Cómo se juega</h2>
+      <ol>
+        <li>Compiten dos equipos por turnos. El equipo de turno elige una categoría y un valor del tablero.</li>
+        <li>Cada pregunta tiene cuatro opciones. Respuesta <b class="ok">correcta</b>: suma los puntos. <b class="mal">Incorrecta</b>: los resta. Si se agota el tiempo, no suma ni resta.</li>
+        <li>Los valores indican la dificultad: 200 y 400 son de nivel 1, 600 y 800 de nivel 2 y 1000 de nivel 3.</li>
+        <li><b>Daily Double:</b> un casillero oculto en el que el equipo apuesta antes de ver la pregunta.</li>
+        <li><b>Final Jeopardy:</b> al terminar el tablero, ambos equipos apuestan y responden la misma pregunta.</li>
+        <li>Gana el equipo con mayor puntaje final.</li>
+      </ol>
+      <p class="ayuda">Atajos: <kbd>1</kbd>–<kbd>4</kbd> o <kbd>A</kbd>–<kbd>D</kbd> eligen una opción · <kbd>H</kbd> pista ·
+        <kbd>Enter</kbd> continuar · <kbd>F</kbd> pantalla completa · <kbd>S</kbd> sonido</p>
+      <button class="btn btn-primario" id="btn-cerrar-ayuda">Entendido</button>
+    </div>
+  </div>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+  <script src="js/sonidos.js" defer></script>
+  <script src="js/jeopardy.js" defer></script>
+</body>
 </html>

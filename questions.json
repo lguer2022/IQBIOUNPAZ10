@@ -1,392 +1,418 @@
 {
-  "event": "JORNADA DE LOS 10 AÑOS de IQ/BIO",
+  "event": "Celebración de la Jornada de Bioimágenes 2026",
   "categories": [
     {
-      "title": "Esterilización (IQ)",
+      "title": "Anatomía radiológica",
       "questions": [
         {
           "value": 200,
-          "prompt": "¿Temperatura y tiempo estándar para autoclave de vapor saturado a 1 atm adicional?",
-          "answer": "121°C por 15–20 minutos",
+          "level": 1,
+          "prompt": "¿Cuántas vértebras cervicales tiene la columna vertebral humana?",
+          "answer": "7",
           "options": [
-            "121°C por 15–20 minutos",
-            "134°C por 5–10 minutos", 
-            "100°C por 30 minutos",
-            "160°C por 2 horas"
+            "7",
+            "5",
+            "12",
+            "8"
           ],
           "correctIndex": 0,
-          "hint": "Ciclo de Gravedad",
+          "hint": "La primera es el atlas y la segunda el axis.",
           "image": ""
         },
         {
           "value": 400,
-          "prompt": "Nombre del indicador biológico clásico para validar esterilización a vapor.",
-          "answer": "Geobacillus stearothermophilus",
+          "level": 1,
+          "prompt": "¿Qué hueso del antebrazo se ubica del lado del pulgar?",
+          "answer": "Radio",
           "options": [
-            "Bacillus subtilis",
-            "Geobacillus stearothermophilus",
-            "Clostridium sporogenes",
-            "Bacillus cereus"
+            "Cúbito (ulna)",
+            "Húmero",
+            "Radio",
+            "Escafoides"
           ],
-          "correctIndex": 1,
-          "hint": "Termófilo",
+          "correctIndex": 2,
+          "hint": "Comparte nombre con una medida de la circunferencia.",
           "image": ""
         },
         {
           "value": 600,
-          "prompt": "¿Qué empaques son más adecuados para esterilización por vapor?",
-          "answer": "Campos de tela no tejida o papel grado médico",
+          "level": 2,
+          "prompt": "En una radiografía de tórax PA, ¿qué estructura forma el borde derecho de la silueta cardíaca?",
+          "answer": "Aurícula derecha",
           "options": [
-            "Bolsas de plástico convencional",
-            "Campos de tela no tejida o papel grado médico",
-            "Papel periódico",
-            "Láminas de aluminio"
+            "Ventrículo izquierdo",
+            "Aurícula derecha",
+            "Cayado aórtico",
+            "Ventrículo derecho"
           ],
           "correctIndex": 1,
-          "hint": "",
+          "hint": "Es la cavidad que recibe a las venas cavas.",
           "image": ""
         },
         {
           "value": 800,
-          "prompt": "Defina 'esterilidad asegurada' (SAL) 10⁻⁶.",
-          "answer": "Probabilidad de 1 en 1.000.000 de que un microorganismo sobreviva",
+          "level": 2,
+          "prompt": "¿Cuál es el hueso del carpo que se fractura con mayor frecuencia?",
+          "answer": "Escafoides",
           "options": [
-            "Probabilidad de 1 en 1.000 de que un microorganismo sobreviva",
-            "Probabilidad de 1 en 10.000 de que un microorganismo sobreviva",
-            "Probabilidad de 1 en 100.000 de que un microorganismo sobreviva",
-            "Probabilidad de 1 en 1.000.000 de que un microorganismo sobreviva"
+            "Semilunar",
+            "Pisiforme",
+            "Ganchoso",
+            "Escafoides"
           ],
           "correctIndex": 3,
-          "hint": "",
+          "hint": "Para verlo mejor se usa la desviación cubital.",
           "image": ""
         },
         {
           "value": 1000,
-          "prompt": "Ensayo que verifica penetración de vapor en paquetes porosos.",
-          "answer": "Prueba Bowie-Dick",
+          "level": 3,
+          "prompt": "En una TC de cráneo, ¿qué estructura de la duramadre separa los dos hemisferios cerebrales en la línea media?",
+          "answer": "Hoz del cerebro",
           "options": [
-            "Test de Helix",
-            "Prueba Bowie-Dick",
-            "Test de Dart",
-            "Ensayo de Geobacillus"
+            "Tienda del cerebelo",
+            "Cuerpo calloso",
+            "Hoz del cerebro",
+            "Septum pellucidum"
           ],
-          "correctIndex": 1,
-          "hint": "Paquetes porosos",
+          "correctIndex": 2,
+          "hint": "Su nombre recuerda a una herramienta de cosecha.",
           "image": ""
         }
       ]
     },
     {
-      "title": "Bioseguridad y PPE (IQ/BIO)",
+      "title": "Física de las radiaciones",
       "questions": [
         {
           "value": 200,
-          "prompt": "Secuencia correcta para retirarse guantes y camisolín.",
-          "answer": "Guantes → higiene de manos → camisolín",
+          "level": 1,
+          "prompt": "¿Quién descubrió los rayos X en 1895?",
+          "answer": "Wilhelm C. Röntgen",
           "options": [
-            "Camisolín → guantes → higiene de manos",
-            "Guantes → higiene de manos → camisolín",
-            "Higiene de manos → guantes → camisolín",
-            "Guantes → camisolín → higiene de manos"
+            "Wilhelm C. Röntgen",
+            "Henri Becquerel",
+            "Marie Curie",
+            "Godfrey Hounsfield"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 0,
+          "hint": "Físico alemán; la primera imagen fue la mano de su esposa.",
           "image": ""
         },
         {
           "value": 400,
-          "prompt": "¿Qué respirador recomiendan para aerosoles biológicos?",
-          "answer": "N95 o superior",
+          "level": 1,
+          "prompt": "¿En qué electrodo del tubo de rayos X se encuentra el filamento?",
+          "answer": "Cátodo",
           "options": [
-            "Mascarilla quirúrgica simple",
-            "N95 o superior",
-            "Mascarilla de tela",
-            "Protector facial únicamente"
+            "Ánodo",
+            "Rotor",
+            "Estator",
+            "Cátodo"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 3,
+          "hint": "Es el polo negativo del tubo.",
           "image": ""
         },
         {
           "value": 600,
-          "prompt": "Clase de cabina para manipulación de agentes moderados con protección al producto y al operador.",
-          "answer": "Cabina de Bioseguridad Clase II",
+          "level": 2,
+          "prompt": "¿Qué factor de exposición controla principalmente la energía y el poder de penetración del haz?",
+          "answer": "Kilovoltaje (kVp)",
           "options": [
-            "Cabina de Bioseguridad Clase I",
-            "Cabina de Bioseguridad Clase II",
-            "Cabina de Bioseguridad Clase III",
-            "Campana de extracción química"
+            "Miliamperaje-segundo (mAs)",
+            "Kilovoltaje (kVp)",
+            "Tiempo de exposición",
+            "Tamaño del foco"
           ],
           "correctIndex": 1,
-          "hint": "",
+          "hint": "Se mide en kilovoltios.",
           "image": ""
         },
         {
           "value": 800,
-          "prompt": "Color de contenedor para residuos punzocortantes en Argentina.",
-          "answer": "Rojo rígido, rotulado como patogénico",
+          "level": 2,
+          "prompt": "Según la ley del inverso del cuadrado de la distancia, si se duplica la distancia a la fuente, la intensidad de la radiación...",
+          "answer": "Se reduce a la cuarta parte",
           "options": [
-            "Amarillo rígido",
-            "Verde rígido",
-            "Rojo rígido, rotulado como patogénico",
-            "Negro rígido"
+            "Se reduce a la mitad",
+            "Se reduce a la cuarta parte",
+            "Se duplica",
+            "No cambia"
           ],
-          "correctIndex": 2,
-          "hint": "",
+          "correctIndex": 1,
+          "hint": "Intensidad proporcional a 1/d².",
           "image": ""
         },
         {
           "value": 1000,
-          "prompt": "Diferencia entre desinfección de alto nivel y esterilización.",
-          "answer": "La primera no elimina todas las esporas; la segunda sí",
+          "level": 3,
+          "prompt": "¿Qué interacción de los rayos X con la materia predomina en los tejidos blandos con las energías habituales de diagnóstico (80–120 kVp)?",
+          "answer": "Efecto Compton",
           "options": [
-            "No hay diferencia, son sinónimos",
-            "La primera usa calor húmedo, la segunda calor seco",
-            "La primera no elimina todas las esporas; la segunda sí",
-            "La primera es más efectiva que la segunda"
+            "Efecto fotoeléctrico",
+            "Producción de pares",
+            "Efecto Compton",
+            "Dispersión coherente"
           ],
           "correctIndex": 2,
-          "hint": "",
+          "hint": "Es la principal fuente de radiación dispersa.",
           "image": ""
         }
       ]
     },
     {
-      "title": "Radiología Convencional (BIO)",
+      "title": "Técnica y posicionamiento",
       "questions": [
         {
           "value": 200,
-          "prompt": "Unidad SI de dosis absorbida.",
-          "answer": "Gray (Gy)",
+          "level": 1,
+          "prompt": "¿Cuál es la proyección de rutina para una radiografía de tórax con el paciente de pie?",
+          "answer": "Posteroanterior (PA)",
           "options": [
-            "Sievert (Sv)",
-            "Gray (Gy)",
-            "Becquerel (Bq)",
-            "Curie (Ci)"
+            "Posteroanterior (PA)",
+            "Anteroposterior (AP)",
+            "Decúbito lateral",
+            "Oblicua anterior"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 0,
+          "hint": "El haz ingresa por la espalda.",
           "image": ""
         },
         {
           "value": 400,
-          "prompt": "Efecto fotoeléctrico: mayor probabilidad en…",
-          "answer": "Materiales de alto Z y energías bajas",
+          "level": 1,
+          "prompt": "¿En qué fase respiratoria se adquiere habitualmente la radiografía de tórax de rutina?",
+          "answer": "Inspiración profunda sostenida",
           "options": [
-            "Materiales de bajo Z y energías altas",
-            "Materiales de alto Z y energías bajas",
-            "Materiales de bajo Z y energías bajas",
-            "Materiales de alto Z y energías altas"
+            "Espiración forzada",
+            "Respiración libre",
+            "Maniobra de Valsalva",
+            "Inspiración profunda sostenida"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 3,
+          "hint": "Se busca ver la mayor superficie pulmonar posible.",
           "image": ""
         },
         {
           "value": 600,
-          "prompt": "Relación mAs–densidad óptica en radiografía.",
-          "answer": "Proporcional (aumenta mAs, aumenta DO)",
+          "level": 2,
+          "prompt": "¿Qué dispositivo, ubicado entre el paciente y el receptor, absorbe la radiación dispersa?",
+          "answer": "Rejilla antidifusora",
           "options": [
-            "Inversamente proporcional",
-            "Proporcional (aumenta mAs, aumenta DO)",
-            "No hay relación",
-            "Exponencial"
+            "Rejilla antidifusora",
+            "Filtro de aluminio",
+            "Pantalla de refuerzo",
+            "Cuña compensadora"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 0,
+          "hint": "Está formada por láminas de plomo.",
           "image": ""
         },
         {
           "value": 800,
-          "prompt": "Función del bucky en radiología convencional.",
-          "answer": "Alojar rejilla antidifusora y portachasis",
+          "level": 2,
+          "prompt": "¿Qué incidencia es la clásica para evaluar los senos maxilares?",
+          "answer": "Waters (occipitomentoniana)",
           "options": [
-            "Generar rayos X",
-            "Alojar rejilla antidifusora y portachasis",
-            "Controlar la exposición",
-            "Procesar las imágenes"
+            "Caldwell",
+            "Towne",
+            "Waters (occipitomentoniana)",
+            "Schüller"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 2,
+          "hint": "Se apoya el mentón en el receptor.",
           "image": ""
         },
         {
           "value": 1000,
-          "prompt": "Nombre del ruido por señal baja en imagen digital.",
-          "answer": "Ruido cuántico (quantum mottle)",
+          "level": 3,
+          "prompt": "En la incidencia de Towne (AP axial de cráneo), ¿qué angulación del rayo central se usa respecto de la línea orbitomeatal?",
+          "answer": "30° caudal",
           "options": [
-            "Ruido electrónico",
-            "Ruido cuántico (quantum mottle)",
-            "Ruido estructural",
-            "Ruido de movimiento"
+            "15° cefálico",
+            "30° caudal",
+            "45° caudal",
+            "Sin angulación"
           ],
           "correctIndex": 1,
-          "hint": "",
+          "hint": "Permite ver el hueso occipital.",
           "image": ""
         }
       ]
     },
     {
-      "title": "Protección Radiológica (BIO)",
+      "title": "Protección radiológica",
       "questions": [
         {
           "value": 200,
-          "prompt": "Principio ALARA significa…",
-          "answer": "Tan baja como razonablemente alcanzable",
+          "level": 1,
+          "prompt": "¿Qué significa el principio ALARA?",
+          "answer": "Tan bajo como sea razonablemente posible",
           "options": [
-            "Siempre límite alto de radiación aceptable",
-            "Tan baja como razonablemente alcanzable",
-            "Aplicación limitada de radiación apropiada",
-            "Análisis de límites para radiación activa"
+            "Alta limitación de absorción radiológica anual",
+            "Área libre de radiación autorizada",
+            "Ajuste local de atenuación radiológica",
+            "Tan bajo como sea razonablemente posible"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 3,
+          "hint": "Son siglas en inglés: As Low As...",
           "image": ""
         },
         {
           "value": 400,
-          "prompt": "Blindaje típico en paredes de salas de RX.",
-          "answer": "Plomo o equivalente en mm según cálculo",
+          "level": 1,
+          "prompt": "¿Cuáles son los tres factores básicos de protección frente a la exposición externa?",
+          "answer": "Tiempo, distancia y blindaje",
           "options": [
-            "Hormigón simple",
-            "Plomo o equivalente en mm según cálculo",
-            "Madera laminada",
-            "Vidrio templado"
+            "kVp, mAs y tiempo",
+            "Filtro, rejilla y colimador",
+            "Tiempo, distancia y blindaje",
+            "Dosis, actividad y energía"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 2,
+          "hint": "Menos tiempo, más lejos y con barrera.",
           "image": ""
         },
         {
           "value": 600,
-          "prompt": "Dosímetro personal más común para RX diagnóstica.",
-          "answer": "TLD u OSL (p.ej., Al2O3)",
+          "level": 2,
+          "prompt": "¿Qué elemento utiliza el trabajador para registrar su dosis ocupacional?",
+          "answer": "Dosímetro personal",
           "options": [
-            "Cámara de ionización",
-            "TLD u OSL (p.ej., Al2O3)",
+            "Dosímetro personal",
             "Contador Geiger",
-            "Película radiográfica solamente"
+            "Fotómetro",
+            "Exposímetro automático"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 0,
+          "hint": "Se lleva a la altura del tórax, por fuera del delantal salvo indicación.",
           "image": ""
         },
         {
           "value": 800,
-          "prompt": "Efectos estocásticos vs determinísticos: diferencia clave.",
-          "answer": "Estocásticos no tienen umbral; determinísticos sí",
+          "level": 2,
+          "prompt": "Según las recomendaciones internacionales (ICRP), ¿cuál es el límite de dosis efectiva para trabajadores ocupacionalmente expuestos?",
+          "answer": "20 mSv por año, promediado en 5 años",
           "options": [
-            "Estocásticos tienen umbral; determinísticos no",
-            "Estocásticos no tienen umbral; determinísticos sí",
-            "Ambos tienen el mismo umbral",
-            "No hay diferencia entre ellos"
+            "1 mSv por año",
+            "50 mSv por mes",
+            "100 mSv por año",
+            "20 mSv por año, promediado en 5 años"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 3,
+          "hint": "El límite para el público es de 1 mSv por año.",
           "image": ""
         },
         {
           "value": 1000,
-          "prompt": "Leyes físicas para reducir dosis por distancia.",
-          "answer": "Ley del inverso del cuadrado",
+          "level": 3,
+          "prompt": "¿Qué característica define a los efectos estocásticos de la radiación?",
+          "answer": "Su probabilidad aumenta con la dosis y no tienen umbral",
           "options": [
-            "Ley de atenuación exponencial",
-            "Ley del inverso del cuadrado",
-            "Ley de conservación de energía",
-            "Ley de Bragg"
+            "Su gravedad aumenta con la dosis y tienen umbral",
+            "Su probabilidad aumenta con la dosis y no tienen umbral",
+            "Solo aparecen con dosis muy altas",
+            "Se manifiestan siempre en pocas horas"
           ],
           "correctIndex": 1,
-          "hint": "",
+          "hint": "Ejemplo: el cáncer radioinducido.",
           "image": ""
         }
       ]
     },
     {
-      "title": "Anatomía y Procedimientos (IQ/BIO)",
+      "title": "Modalidades de imagen",
       "questions": [
         {
           "value": 200,
-          "prompt": "Plano que divide el cuerpo en derecha/izquierda.",
-          "answer": "Plano sagital",
+          "level": 1,
+          "prompt": "¿Cuál de estas técnicas de imagen NO utiliza radiación ionizante?",
+          "answer": "Ecografía",
           "options": [
-            "Plano coronal",
-            "Plano sagital",
-            "Plano transversal",
-            "Plano oblicuo"
+            "Tomografía computada",
+            "Ecografía",
+            "Mamografía",
+            "Radioscopia"
           ],
           "correctIndex": 1,
-          "hint": "",
+          "hint": "Usa ondas de sonido.",
           "image": ""
         },
         {
           "value": 400,
-          "prompt": "Instrumento para hemostasia de vasos pequeños.",
-          "answer": "Mosquito (Halsted)",
+          "level": 1,
+          "prompt": "¿Con qué forma la imagen la resonancia magnética?",
+          "answer": "Campo magnético y ondas de radiofrecuencia",
           "options": [
-            "Kelly",
-            "Mosquito (Halsted)",
-            "Rochester",
-            "Adson"
+            "Rayos X",
+            "Rayos gamma",
+            "Campo magnético y ondas de radiofrecuencia",
+            "Ultrasonido"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 2,
+          "hint": "Se basa en los protones de hidrógeno.",
           "image": ""
         },
         {
           "value": 600,
-          "prompt": "Proyección para tórax PA: distancia foco-película típica.",
-          "answer": "180 cm (72 pulgadas)",
+          "level": 2,
+          "prompt": "En tomografía computada, ¿qué valor tiene el agua en la escala de unidades Hounsfield?",
+          "answer": "0 UH",
           "options": [
-            "100 cm (40 pulgadas)",
-            "180 cm (72 pulgadas)",
-            "150 cm (60 pulgadas)",
-            "200 cm (80 pulgadas)"
+            "0 UH",
+            "−1000 UH",
+            "+1000 UH",
+            "+100 UH"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 0,
+          "hint": "Es el punto de referencia de la escala.",
           "image": ""
         },
         {
           "value": 800,
-          "prompt": "Pinza para sujetar campo operatorio en piel.",
-          "answer": "Pinza Backhaus",
+          "level": 2,
+          "prompt": "¿Cuál es el radioisótopo más utilizado en medicina nuclear diagnóstica convencional?",
+          "answer": "Tecnecio-99m",
           "options": [
-            "Pinza Allis",
-            "Pinza Backhaus",
-            "Pinza Kocher",
-            "Pinza Babcock"
+            "Yodo-131",
+            "Flúor-18",
+            "Cobalto-60",
+            "Tecnecio-99m"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 3,
+          "hint": "Tiene un período de semidesintegración de unas 6 horas.",
           "image": ""
         },
         {
           "value": 1000,
-          "prompt": "Corte anatómico que divide en anterior/posterior.",
-          "answer": "Plano coronal (frontal)",
+          "level": 3,
+          "prompt": "En resonancia magnética, ¿qué se ve hiperintenso (brillante) en las secuencias potenciadas en T2?",
+          "answer": "Los líquidos, como el LCR",
           "options": [
-            "Plano sagital",
-            "Plano coronal (frontal)",
-            "Plano transversal",
-            "Plano paramediano"
+            "Los líquidos, como el LCR",
+            "El hueso cortical",
+            "El aire",
+            "Las calcificaciones densas"
           ],
-          "correctIndex": 1,
-          "hint": "",
+          "correctIndex": 0,
+          "hint": "Regla mnemotécnica: en T2, el agua es blanca.",
           "image": ""
         }
       ]
     }
   ],
   "finalJeopardy": {
-    "prompt": "Concepto que resume el principio rector de protección radiológica en diagnóstico.",
-    "answer": "ALARA",
+    "category": "Tomografía computada",
+    "prompt": "En tomografía computada helicoidal, ¿qué parámetro relaciona el avance de la camilla por cada rotación del tubo con el ancho de colimación del haz?",
+    "answer": "Pitch",
     "options": [
-      "ALARA",
-      "RADAR",
-      "MELAS",
-      "DOSIM"
+      "Matriz",
+      "Kernel de reconstrucción",
+      "Pitch",
+      "Campo de visión (FOV)"
     ],
-    "correctIndex": 0,
-    "hint": "Principio fundamental para minimizar exposición"
+    "correctIndex": 2,
+    "hint": "Un valor mayor que 1 reduce la dosis y el tiempo de estudio."
   }
 }
